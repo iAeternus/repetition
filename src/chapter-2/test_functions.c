@@ -162,13 +162,13 @@ void test_u_add() {
 
     // Then
     printf("%d + %d = %d %s\n", x, y, res, tag ? "overflow" : "normal");
-    assert(tag == is_u_add_overflows(x, y, w)); // true
+    assert(tag == u_add_ok(x, y, w)); // true
     assert(res == 0b0101); // 5
 }
 
 void test_u_inv() {
     // Given
-    int n = 5;
+    const int n = 5;
     U x[] = {0x0, 0x5, 0x8, 0xD, 0xF};
     U w = 4;
     U res[n];
@@ -183,7 +183,29 @@ void test_u_inv() {
     print_arr(res, n, sizeof(U), print_big_hex);
 }
 
+void test_t_add() {
+    // Given
+    const int n = 5;
+    S x[] = {-8, -8, -8, 2, 5};
+    S y[] = {-5, -8, 5, 5, 5};
+    U w = 4;
+    S res1[n], res2[n];
+    overflow_type_enum types[n];
+    
+    // When
+    for(int i = 0; i < 5; ++i) {
+        res1[i] = x[i] + y[i];
+        types[i] = t_add(x[i], y[i], w, &res2[i]);
+    }
+
+    // Then
+    for(int i = 0; i < 5; ++i) {
+        printf("%d\t%d\t%s\n", res1[i], res2[i], to_string(types[i]));
+    }
+}
+
 void test_operations() {
     test_u_add();
     test_u_inv();
+    test_t_add();
 }

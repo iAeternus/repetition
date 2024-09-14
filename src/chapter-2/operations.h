@@ -16,7 +16,7 @@
  * @par x 第一个无符号数
  * @par y 第二个无符号数
  * @par w 数据类型的位数
- * @par res 结果
+ * @par res 结果（指针传参）
  * @return true=溢出 false=正常
  */
 bool u_add(U x, U y, U w, U* res);
@@ -28,7 +28,7 @@ bool u_add(U x, U y, U w, U* res);
  * @par w 数据类型的位数
  * @return true=溢出 false=正常
  */
-bool is_u_add_overflows(U x, U y, U w);
+bool u_add_ok(U x, U y, U w);
 
 /**
  * 计算无符号数的加法逆元
@@ -38,6 +38,14 @@ bool is_u_add_overflows(U x, U y, U w);
  */
 U u_inv(U x, U w);
 
-// TODO
+/**
+ * 补码加法，并判断是否溢出
+ * @par x 第一个补码
+ * @par y 第二个补码
+ * @par w 数据类型的位数
+ * @par res 结果（指针传参）
+ * @return 溢出类型枚举
+ */
+overflow_type_enum t_add(S x, S y, U w, S* res);
 
 #endif // OPERATION_H

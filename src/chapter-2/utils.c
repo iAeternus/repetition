@@ -69,11 +69,28 @@ void print_small_hex(const void* elem) {
     printf("0x%x ", *(const signed int*)elem);
 }
 
-void print_arr(const void* p_arr, U size, U elem_size, elem_print_func func) {
+void print_arr(const void* p_arr, const U size, const U elem_size, const elem_print_func func) {
     char* ptr = (char*) p_arr;
     for(U i = 0; i < size; ++i) {
         func(ptr);
         ptr += elem_size;
     }
     putchar('\n');
+}
+
+/**
+ * 将溢出类型枚举转化为描述
+ */
+const char* to_string(overflow_type_enum type) {
+    switch(type) {
+    case POSITIVE_OVERFLOW:
+        return "positive overflow";
+    case NORMAL:
+        return "normal";
+    case NEGATIVE_OVERFLOW:
+        return "negative overflow";
+    default:
+        puts("Incorrect type.");
+        return NULL;
+    }
 }

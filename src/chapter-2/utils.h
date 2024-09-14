@@ -55,6 +55,20 @@ void print_small_hex(const void* elem);
  * @par elem_size 单个数组元素的大小，单位：字节
  * @par func 打印元素的函数指针
  */
-void print_arr(const void* p_arr, U size, U elem_size, elem_print_func func);
+void print_arr(const void* p_arr, const U size, const U elem_size, const elem_print_func func);
+
+/**
+ * 溢出类型枚举
+ */
+typedef enum {
+    POSITIVE_OVERFLOW, // 正溢出
+    NORMAL, // 正常
+    NEGATIVE_OVERFLOW, // 负溢出
+} overflow_type_enum;
+
+/**
+ * 将溢出类型枚举转化为描述
+ */
+const char* to_string(overflow_type_enum type);
 
 #endif // UTILS_H
