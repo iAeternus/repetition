@@ -3,10 +3,11 @@
 #include <assert.h>
 #include <limits.h>
 
-#include "test_functions.h"
+#include "unit_tests.h"
 #include "test_utils.h"
 #include "convert.h"
 #include "operations.h"
+#include "floating_number.h"
 
 void test_build_vector() {
     // Given
@@ -307,4 +308,99 @@ void test_operations() {
     test("t_inv", test_t_inv);
     test("u_mul", test_u_mul);
     test("t_mul", test_t_mul);
+}
+
+void test_build_floating_number() {
+    // Given
+    floating_number num;
+    size k = 4;
+    size n = 3;
+    size len = 8;
+    bit bits[] = "00110110";
+
+    // When
+    build_floating_number(&num, k, n, len, bits);
+
+    // Then
+    print_floating_number(&num);
+
+    // Final
+    destroy_floating_number(&num);
+}
+
+void test_build_with_float() {
+    // Given
+    floating_number num;
+    float f = 3510593.0f;
+
+    // When
+    build_with_float(&num, f);
+
+    // Then
+    print_floating_number(&num);
+
+    // Final
+    destroy_floating_number(&num);
+}
+
+void test_build_with_double() {
+    // Given
+    floating_number num;
+    double d = 3510593.0;
+
+    // When
+    build_with_double(&num, d);
+
+    // Then
+    print_floating_number(&num);
+
+    // Final
+    destroy_floating_number(&num);
+}
+
+void test_get_type() {
+    // Given
+    floating_number a, b, c, d, e;
+
+    build_32(&a, "00111111110000000000000000000000"); // 1.5 规格化值
+    build_32(&b, "00000000000000000000000000000001"); // 0.0000001192092896 非规格化值
+    build_32(&c, "01111111100000000000000000000000"); // 正无穷
+    build_32(&d, "11111111100000000000000000000000"); // 负无穷
+    build_32(&e, "01111111101111111111111111111111"); // NaN
+
+    // When
+    floating_number_type_enum res1 = get_type(&a);
+    floating_number_type_enum res2 = get_type(&b);
+    floating_number_type_enum res3 = get_type(&c);
+    floating_number_type_enum res4 = get_type(&d);
+    floating_number_type_enum res5 = get_type(&e);
+
+    // Then
+    print_floating_number(&a);
+    print_floating_number(&b);
+    print_floating_number(&c);
+    print_floating_number(&d);
+    print_floating_number(&e);
+
+    printf("%d %d %d %d %d\n", res1, res2, res3, res4, res5);
+    
+    assert(res1 == NORMALIZED);
+    assert(res2 == UNNORMALIZED);
+    assert(res3 == POSITIVE_INFINITY);
+    assert(res4 == NEGATIVE_INFINITY);
+    assert(res5 == NAN);
+
+    // Final
+    destroy_floating_number(&a);
+    destroy_floating_number(&b);
+    destroy_floating_number(&c);
+    destroy_floating_number(&d);
+    destroy_floating_number(&e);
+}
+
+void test_floating_number() {
+    test("build_floating_number", test_build_floating_number);
+    test("build_with_float", test_build_with_float);
+    test("build_with_double", test_build_with_double);
+    test("get_type", test_get_type);
 }

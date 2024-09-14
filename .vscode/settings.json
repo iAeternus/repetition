@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "operations.h": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "test_utils.h": "c"
     },
     "cSpell.words": [
         "tmin"

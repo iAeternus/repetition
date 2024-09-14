@@ -27,4 +27,11 @@ void test_u_mul();
 void test_t_mul();
 void test_operations();
 
+// floating_number.h
+void test_build_floating_number();
+void test_build_with_float();
+void test_build_with_double();
+void test_get_type();
+void test_floating_number();
+
 #endif // TEST_FUNCTIONS_H

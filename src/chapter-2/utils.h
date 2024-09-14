@@ -1,6 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <stdbool.h>
+
 typedef unsigned int U;
 typedef signed int S;
 
@@ -8,6 +10,14 @@ typedef U* B_VEC;
 
 // 计算 2^n
 #define POW_2(n) ((1) << (n))
+
+/**
+ * 断言指针不为空
+ * 若指针为空则打印信息结束程序，否则什么都不做
+ * @par ptr 指针
+ * @par msg 信息
+ */
+void assert_not_null(void* ptr, const char* msg);
 
 /**
  * 构建二进制向量
@@ -73,5 +83,25 @@ typedef enum {
  * 将溢出类型枚举转化为描述
  */
 const char* to_string(overflow_type_enum type);
+
+/**
+ * 将float的内存表示转换为二进制位字符串
+ */
+char* float_to_binary_string(float f);
+
+/**
+ * 将double的内存表示转换为二进制位字符串
+ */
+char* double_to_binary_string(double d);
+
+/**
+ * 判断字符串是否由全 0 字符构成
+ */
+bool is_string_all_zero(const char* str, U len);
+
+/**
+ * 判断字符串是否由全 1 字符构成
+ */
+bool is_string_all_one(const char* str, U len);
 
 #endif // UTILS_H

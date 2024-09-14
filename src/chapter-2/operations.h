@@ -7,8 +7,6 @@
 #ifndef OPERATION_H
 #define OPERATION_H
 
-#include <stdbool.h>
-
 #include "utils.h"
 
 /**

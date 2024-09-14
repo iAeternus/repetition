@@ -1,13 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "utils.h"
 
-void build_vector(S num, U w, B_VEC* x) {
-    *x = (B_VEC)malloc(sizeof(U) * w);
-    if (*x == NULL) {
+/**
+ * 断言指针不为空
+ * 若指针为空则打印信息结束程序，否则什么都不做
+ * @par ptr 指针
+ * @par msg 信息
+ */
+void assert_not_null(void* ptr, const char* msg) {
+    if(!ptr) {
+        if(msg) {
+            puts(msg);
+        }
         exit(EXIT_FAILURE);
     }
+}
+
+void build_vector(S num, U w, B_VEC* x) {
+    *x = (B_VEC)malloc(sizeof(U) * w);
+    assert_not_null(*x, NULL);
 
     U i;
     for (i = 0; i < w; ++i) {
@@ -104,4 +118,71 @@ const char* to_string(overflow_type_enum type) {
         puts("Incorrect type.");
         return NULL;
     }
+}
+
+char* float_to_binary_string(float f) {
+    char* binary_str = (char*)malloc(33 * sizeof(char));
+    assert_not_null(binary_str, NULL);
+
+    unsigned char* f_bytes = (unsigned char*)&f;
+    memset(binary_str, '0', 32);
+    binary_str[32] = '\0';
+
+    for (int i = 0; i < sizeof(float); ++i) {
+        for (int j = 0; j < 8; ++j) {
+            int bit_index = 31 - (i * 8 + j);
+            if (f_bytes[i] & (1 << j)) {
+                binary_str[bit_index] = '1';
+            }
+        }
+    }
+
+    return binary_str;
+}
+
+char* double_to_binary_string(double d) {
+    char* binary_str = (char*)malloc(65 * sizeof(char));
+    assert_not_null(binary_str, NULL);
+
+    unsigned char* d_bytes = (unsigned char*)&d;
+
+    memset(binary_str, '0', 64);
+    binary_str[64] = '\0';
+
+    for (int i = 0; i < sizeof(double); ++i) {
+        for (int j = 0; j < 8; ++j) {
+            int bit_index = 63 - (i * 8 + j);
+            if (d_bytes[i] & (1 << j)) {
+                binary_str[bit_index] = '1';
+            }
+        }
+    }
+
+    return binary_str;
+}
+
+bool is_string_all_zero(const char* str, U len) {
+    if(!str || len == 0) {
+        return true;
+    }
+
+    for(U i = 0; i < len; ++i) {
+        if(str[i] != '0') {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool is_string_all_one(const char* str, U len) {
+    if(!str || len == 0) {
+        return true;
+    }
+
+    for(U i = 0; i < len; ++i) {
+        if(str[i] != '1') {
+            return false;
+        }
+    }
+    return true;
 }

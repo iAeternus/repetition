@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=
 
 TARGET=main
-SRCS=main.c convert.c test_functions.c utils.c operations.c test_utils.c
+SRCS=main.c convert.c unit_tests.c utils.c operations.c test_utils.c floating_number.c
 
 all: $(TARGET)
 $(TARGET): $(SRCS:.c=.o)
