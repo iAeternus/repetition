@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <limits.h>
 
 #include "test_functions.h"
+#include "test_utils.h"
 #include "convert.h"
 #include "operations.h"
 
@@ -28,7 +30,7 @@ void test_build_vector() {
 }
 
 void test_utils() {
-    test_build_vector();
+    test("build_vector", test_build_vector);
 }
 
 void test_b2u() {
@@ -140,14 +142,14 @@ void test_t_min() {
 }
 
 void test_convert() {
-    test_b2u();
-    test_b2t();
-    test_t2u();
-    test_u2t();
-    test_u_max();
-    test_u_min();
-    test_t_max();
-    test_t_min();
+    test("b2u", test_b2u);
+    test("b2t", test_b2t);
+    test("t2u", test_t2u);
+    test("u2t", test_u2t);
+    test("u_max", test_u_max);
+    test("u_min", test_u_min);
+    test("t_max", test_t_max);
+    test("t_min", test_t_min);
 }
 
 void test_u_add() {
@@ -162,8 +164,24 @@ void test_u_add() {
 
     // Then
     printf("%d + %d = %d %s\n", x, y, res, tag ? "overflow" : "normal");
-    assert(tag == u_add_ok(x, y, w)); // true
+    assert(tag == true);
     assert(res == 0b0101); // 5
+}
+
+void test_u_add_ok() {
+    // Given
+    U a = UINT_MAX;
+    U b = 1;
+    U c = 100;
+    U d = 200;
+
+    // When
+    bool res1 = u_add_ok(a, b); // 溢出
+    bool res2 = u_add_ok(c, d); // 正常
+
+    // Then
+    printf("%d + %d = %d\t%s\n", a, b, a + b, res1 ? "normal" : "overflow");
+    printf("%d + %d = %d\t%s\n", c, d, c + d, res2 ? "normal" : "overflow");
 }
 
 void test_u_inv() {
@@ -204,8 +222,30 @@ void test_t_add() {
     }
 }
 
+void test_t_add_ok() {
+    // Given
+    S a = INT_MAX;
+    S b = 1;
+    S c = 100;
+    S d = 200;
+    S e = INT_MIN;
+    S f = -1;
+
+    // When
+    bool res1 = t_add_ok(a, b); // 正溢出
+    bool res2 = t_add_ok(c, d); // 正常
+    bool res3 = t_add_ok(e, f); // 负溢出
+
+    // Then
+    printf("%d + %d = %d\t%s\n", a, b, a + b, res1 ? "normal" : "overflow");
+    printf("%d + %d = %d\t\t\t%s\n", c, d, c + d, res2 ? "normal" : "overflow");
+    printf("%d + %d = %d\t%s\n", e, f, e + f, res3 ? "normal" : "overflow");
+}
+
 void test_operations() {
-    test_u_add();
-    test_u_inv();
-    test_t_add();
+    test("u_add", test_u_add);
+    test("u_add_ok", test_u_add_ok);
+    test("u_inv", test_u_inv);
+    test("t_add", test_t_add);
+    test("t_add_ok", test_t_add_ok);
 }

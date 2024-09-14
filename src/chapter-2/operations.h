@@ -22,13 +22,12 @@
 bool u_add(U x, U y, U w, U* res);
 
 /**
- * 判断两个无符号数相加是否溢出
+ * 判断两个无符号数相加是否正常，64位无符号数
  * @par x 第一个无符号数
  * @par y 第二个无符号数
- * @par w 数据类型的位数
- * @return true=溢出 false=正常
+ * @return true=正常 false=溢出
  */
-bool u_add_ok(U x, U y, U w);
+bool u_add_ok(U x, U y);
 
 /**
  * 计算无符号数的加法逆元
@@ -47,5 +46,13 @@ U u_inv(U x, U w);
  * @return 溢出类型枚举
  */
 overflow_type_enum t_add(S x, S y, U w, S* res);
+
+/**
+ * 判断两个补码相加是否正常，64位补码
+ * @par x 第一个补码
+ * @par y 第二个补码
+ * @return true=正常 false=溢出
+ */
+bool t_add_ok(S x, S y);
 
 #endif // OPERATION_H

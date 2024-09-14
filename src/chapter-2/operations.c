@@ -24,16 +24,14 @@ bool u_add(U x, U y, U w, U* res) {
 }
 
 /**
- * 判断两个无符号数相加是否溢出
+ * 判断两个无符号数相加是否正常，64位无符号数
  * @par x 第一个无符号数
  * @par y 第二个无符号数
- * @par w 数据类型的位数
- * @return true=溢出 false=正常
+ * @return true=正常 false=溢出
  */
-bool u_add_ok(U x, U y, U w) {
-    U res;
-    u_add(x, y, w, &res);
-    return res < x; // x + y < x 时溢出
+bool u_add_ok(U x, U y) {
+    U sum = x + y;
+    return sum >= x;
 }
 
 /**
@@ -70,4 +68,17 @@ overflow_type_enum t_add(S x, S y, U w, S* res) {
         type = NEGATIVE_OVERFLOW;
     }
     return type;
+}
+
+/**
+ * 判断两个补码相加是否正常，64位补码
+ * @par x 第一个补码
+ * @par y 第二个补码
+ * @return true=正常 false=溢出
+ */
+bool t_add_ok(S x, S y) {
+    S sum = x + y;
+    bool neg_over = x < 0 && y < 0 && sum >= 0;
+    bool pos_over = x >= 0 && y >= 0 && sum < 0;
+    return !neg_over && !pos_over;
 }

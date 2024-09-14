@@ -18,8 +18,10 @@ void test_convert();
 
 // operations.h
 void test_u_add();
+void test_u_add_ok();
 void test_u_inv();
 void test_t_add();
+void test_t_add_ok();
 void test_operations();
 
 #endif // TEST_FUNCTIONS_H
