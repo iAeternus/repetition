@@ -54,19 +54,30 @@ void print_vector(B_VEC x, U w) {
 }
 
 void print_signed_int(const void* elem) {
-    printf("%d ", *(const signed int*)elem);
+    printf("%d ", *(const S*)elem);
 }
 
 void print_unsigned_int(const void* elem) {
-    printf("%u ", *(const unsigned int*)elem);
+    printf("%u ", *(const U*)elem);
 }
 
 void print_big_hex(const void* elem) {
-    printf("0x%X ", *(const signed int*)elem);
+    printf("0x%X ", *(const S*)elem);
 }
 
 void print_small_hex(const void* elem) {
-    printf("0x%x ", *(const signed int*)elem);
+    printf("0x%x ", *(const S*)elem);
+}
+
+void print_binary(const void* elem) {
+    S num = *(const S*)elem;
+    U mask = 1U << 31;
+    for (int i = 31; i >= 0; --i) {
+        U testBit = (U)num & mask;
+        printf("%u", testBit ? 1 : 0);
+        mask >>= 1;
+    }
+    putchar(' ');
 }
 
 void print_arr(const void* p_arr, const U size, const U elem_size, const elem_print_func func) {

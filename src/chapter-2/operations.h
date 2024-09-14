@@ -63,4 +63,22 @@ bool t_add_ok(S x, S y);
  */
 S t_inv(S x, U w);
 
+/**
+ * 无符号数乘法
+ * @par x 第一个无符号数
+ * @par y 第二个无符号数
+ * @par w 数据类型的位数
+ * @return x * y
+ */
+U u_mul(U x, U y, U w);
+
+/**
+ * 补码乘法，注意 tmin <= x, y <= tmax
+ * @par x 第一个补码
+ * @par y 第二个补码
+ * @par w 数据类型的位数
+ * @return x * y
+ */
+S t_mul(S x, S y, U w);
+
 #endif // OPERATION_H

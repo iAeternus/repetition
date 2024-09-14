@@ -260,6 +260,44 @@ void test_t_inv() {
     print_arr(res, N, sizeof(S), print_big_hex);
 }
 
+void test_u_mul() {
+    // Given
+    const int N = 3;
+    U x[] = {5, 4, 3};
+    U y[] = {3, 7, 3};
+    U w = 3;
+    U res1[N], res2[N];
+
+    // When
+    for(int i = 0; i < N; ++i) {
+        res1[i] = x[i] * y[i];
+        res2[i] = u_mul(x[i], y[i], w);
+    }
+
+    // Then
+    print_arr(res1, N, sizeof(U), print_unsigned_int);
+    print_arr(res2, N, sizeof(U), print_unsigned_int);
+}
+
+void test_t_mul() {
+    // Given
+    const int N = 3;
+    S x[] = {-3, -4, 3};
+    S y[] = {3, -1, 3};
+    U w = 3;
+    S res1[N], res2[N];
+
+    // When
+    for(int i = 0; i < N; ++i) {
+        res1[i] = x[i] * y[i];
+        res2[i] = t_mul(x[i], y[i], w);
+    }
+
+    // Then
+    print_arr(res1, N, sizeof(S), print_signed_int);
+    print_arr(res2, N, sizeof(S), print_signed_int);
+}
+
 void test_operations() {
     test("u_add", test_u_add);
     test("u_add_ok", test_u_add_ok);
@@ -267,4 +305,6 @@ void test_operations() {
     test("t_add", test_t_add);
     test("t_add_ok", test_t_add_ok);
     test("t_inv", test_t_inv);
+    test("u_mul", test_u_mul);
+    test("t_mul", test_t_mul);
 }

@@ -48,6 +48,9 @@ void print_big_hex(const void* elem);
 // 打印有符号数的十六进制表示（字母小写）
 void print_small_hex(const void* elem);
 
+// 打印有符号数的补码二进制表示
+void print_binary(const void* elem);
+
 /**
  * 打印数组通用版
  * @par arr 指向数组的指针

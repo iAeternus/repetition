@@ -32,7 +32,7 @@ S b2t(B_VEC x, U w);
 U t2u(S x, U w);
 
 /**
- * 无符号数转补码
+ * 无符号数转补码，注意 0 <= u <= umax
  * @par u 无符号数
  * @par w 数据类型的位数
  * @return 补码

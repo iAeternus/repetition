@@ -101,3 +101,25 @@ S t_inv(S x, U w) {
         return 0;
     }
 }
+
+/**
+ * 无符号数乘法
+ * @par x 第一个无符号数
+ * @par y 第二个无符号数
+ * @par w 数据类型的位数
+ * @return x * y
+ */
+U u_mul(U x, U y, U w) {
+    return (x * y) % POW_2(w);
+}
+
+/**
+ * 补码乘法
+ * @par x 第一个补码
+ * @par y 第二个补码
+ * @par w 数据类型的位数
+ * @return x * y
+ */
+S t_mul(S x, S y, U w) {
+    return u2t((x * y) % POW_2(w), w);
+}
