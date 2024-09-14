@@ -186,29 +186,29 @@ void test_u_add_ok() {
 
 void test_u_inv() {
     // Given
-    const int n = 5;
+    const int N = 5;
     U x[] = {0x0, 0x5, 0x8, 0xD, 0xF};
     U w = 4;
-    U res[n];
+    U res[N];
 
     // When
-    for(int i = 0; i < n; ++i) {
+    for(int i = 0; i < N; ++i) {
         res[i] = u_inv(x[i], w);
     }
 
     // Then
-    print_arr(res, n, sizeof(U), print_unsigned_int);
-    print_arr(res, n, sizeof(U), print_big_hex);
+    print_arr(res, N, sizeof(U), print_unsigned_int);
+    print_arr(res, N, sizeof(U), print_big_hex);
 }
 
 void test_t_add() {
     // Given
-    const int n = 5;
+    const int N = 5;
     S x[] = {-8, -8, -8, 2, 5};
     S y[] = {-5, -8, 5, 5, 5};
     U w = 4;
-    S res1[n], res2[n];
-    overflow_type_enum types[n];
+    S res1[N], res2[N];
+    overflow_type_enum types[N];
     
     // When
     for(int i = 0; i < 5; ++i) {
@@ -242,10 +242,29 @@ void test_t_add_ok() {
     printf("%d + %d = %d\t%s\n", e, f, e + f, res3 ? "normal" : "overflow");
 }
 
+void test_t_inv() {
+    // Given
+    const int N = 5;
+    S x[] = {0x0, 0x5, 0x8, 0xD, 0xF};
+    U w = 4;
+    S res[N];
+
+    // When
+    for(int i = 0; i < N; ++i) {
+        res[i] = t_inv(x[i], w);
+    }
+
+    // Then
+    print_arr(x, N, sizeof(S), print_signed_int);
+    print_arr(res, N, sizeof(S), print_signed_int);
+    print_arr(res, N, sizeof(S), print_big_hex);
+}
+
 void test_operations() {
     test("u_add", test_u_add);
     test("u_add_ok", test_u_add_ok);
     test("u_inv", test_u_inv);
     test("t_add", test_t_add);
     test("t_add_ok", test_t_add_ok);
+    test("t_inv", test_t_inv);
 }

@@ -22,6 +22,7 @@ void test_u_add_ok();
 void test_u_inv();
 void test_t_add();
 void test_t_add_ok();
+void test_t_inv();
 void test_operations();
 
 #endif // TEST_FUNCTIONS_H

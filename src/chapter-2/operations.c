@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "operations.h"
+#include "convert.h"
 
 /**
  * 无符号数加法，并判断是否溢出
@@ -81,4 +82,22 @@ bool t_add_ok(S x, S y) {
     bool neg_over = x < 0 && y < 0 && sum >= 0;
     bool pos_over = x >= 0 && y >= 0 && sum < 0;
     return !neg_over && !pos_over;
+}
+
+/**
+ * 计算补码的加法逆元
+ * @par x 补码，注意 t_min <= x <= t_max
+ * @par w 数据类型的位数
+ * @return 补码的加法逆元，若出现错误，则返回 0
+ */
+S t_inv(S x, U w) {
+    S tmin = t_min(w);
+    if(x == tmin) {
+        return tmin;
+    } else if(x > tmin) {
+        return -x;
+    } else {
+        puts("x cannot be less than tmin.");
+        return 0;
+    }
 }
