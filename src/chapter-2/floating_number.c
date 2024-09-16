@@ -45,15 +45,16 @@ void build_with_double(floating_number* p_num, double d) {
     build_64(p_num, double_to_binary_string(d));
 }
 
+void destroy_bits(bit** p_bits) {
+    if(*p_bits) {
+        free(*p_bits);
+        *p_bits = NULL;
+    }
+}
+
 void destroy_floating_number(floating_number* p_num) {
-    if(p_num->exp) {
-        free(p_num->exp);
-        p_num->exp = NULL;
-    }
-    if(p_num->frac) {
-        free(p_num->frac);
-        p_num->frac = NULL;
-    }
+    destroy_bits(&p_num->exp);
+    destroy_bits(&p_num->frac);
 }
 
 void print_bit(const void* elem) {
@@ -93,4 +94,36 @@ floating_number_type_enum get_type(const floating_number* p_num) {
             return NAN;
         }
     }
+}
+
+/**
+ * 计算 Bias
+ * @par k 阶码位数
+ * @return Bias 的二进制向量形式
+ */
+static bit* cal_bias(size k) {
+    bit* res = (bit*)malloc(sizeof(bit) * (k + 1));
+    assert_not_null(res, NULL);
+
+    res[0] = '0';
+    for(int i = 1; i < k; ++i) {
+        res[i] = '1';
+    }
+    res[k] = '\0';
+
+    return res;
+}
+
+/**
+ * 计算规格化数的阶码
+ * @par exp 阶码字段
+ * @par bias 偏移
+ * @return 阶码的二进制向量形式
+ */
+static bit* cal_E_normalized(const bit* exp, const bit* bias) {
+    
+}
+
+bit* cal_E(const floating_number* p_num) {
+    bit* bias = cal_bias(p_num->k);
 }

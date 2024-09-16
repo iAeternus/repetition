@@ -7,8 +7,6 @@
 #ifndef FLOATING_NUMBER_H
 #define FLOATING_NUMBER_H
 
-#include <stdbool.h>
-
 typedef char bit;
 typedef unsigned int size;
 
@@ -52,13 +50,13 @@ typedef struct {
     size len;
 
     /**
-     * 阶码，k 位
+     * 阶码字段，k 位
      * exp = [e(k-1), e(k-2), ..., e(1), e(0)]
      */
     bit* exp;
 
     /**
-     * 位数，n 位
+     * 尾数字段，n 位
      * frac = [f(n-1), f(n-2), ..., f(1), f(0)]
      */
     bit* frac;
@@ -104,6 +102,12 @@ void build_with_float(floating_number* p_num, float f);
 void build_with_double(floating_number* p_num, double d);
 
 /**
+ * 释放二进制向量
+ * @par p_bits 指向二进制向量的指针
+ */
+void destroy_bits(bit** p_bits);
+
+/**
  * 释放内存空间
  * @par p_num 指向浮点数的指针
  */
@@ -124,5 +128,13 @@ void print_floating_number(const floating_number* p_num);
  * @return 浮点数类型
  */
 floating_number_type_enum get_type(const floating_number* p_num);
+
+/**
+ * 计算阶码 TODO
+ * @par p_num 指向浮点数的指针
+ */
+bit* cal_E(const floating_number* p_num);
+
+// TODO 根据结构计算浮点数的值，舍入，浮点数的运算
 
 #endif // FLOATING_NUMBER_H
